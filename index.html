@@ -146,59 +146,64 @@
 
                     // Option 1: EmailJS (gratuit jusqu'à 200 emails/mois)
                     // Décommentez et configurez avec vos identifiants EmailJS:
-                    /*
-                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
-                    from_name: formData.name,
-                    from_email: formData.email,
-                    message: formData.message,
-                    to_email: "contact@activ.fr"
-                })
-                .then(function() {
-                    showModal();
-                    document.getElementById('contactForm').reset();
-                }, function(error) {
-                    alert('Erreur lors de l\'envoi. Veuillez réessayer.');
-                })
-                .finally(function() {
-                    submitButton.disabled = false;
-                    submitButton.textContent = originalButtonText;
-                });
-                */
+
+                    emailjs
+                        .send("service_ldo80b5", "template_p7biz3p", {
+                            from_name: formData.name,
+                            from_email: formData.email,
+                            message: formData.message
+                        })
+                        .then(
+                            function () {
+                                showModal();
+                                document.getElementById("contactForm").reset();
+                            },
+                            function (error) {
+                                alert(
+                                    "Erreur lors de l'envoi. Veuillez réessayer."
+                                );
+                            }
+                        )
+                        .finally(function () {
+                            submitButton.disabled = false;
+                            submitButton.textContent = originalButtonText;
+                        });
 
                     // Option 2: Formspree (gratuit jusqu'à 50 soumissions/mois)
                     // Remplacez YOUR_FORM_ID par votre ID Formspree
                     /*
-                fetch('https://formspree.io/f/YOUR_FORM_ID', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        showModal();
-                        document.getElementById('contactForm').reset();
-                    } else {
-                        throw new Error('Erreur réseau');
-                    }
-                })
-                .catch(error => {
-                    alert('Erreur lors de l\'envoi. Veuillez réessayer.');
-                })
-                .finally(() => {
-                    submitButton.disabled = false;
-                    submitButton.textContent = originalButtonText;
-                });
-                */
-
-                    // Simulation temporaire (à supprimer en production)
-                    setTimeout(() => {
-                        showModal();
-                        document.getElementById("contactForm").reset();
-                        submitButton.disabled = false;
-                        submitButton.textContent = originalButtonText;
-                    }, 1000);
+                            fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(formData)
+                            })
+                            .then(response => {
+                                if (response.ok) {
+                                    showModal();
+                                    document.getElementById('contactForm').reset();
+                                } else {
+                                    throw new Error('Erreur réseau');
+                                }
+                            })
+                            .catch(error => {
+                                alert('Erreur lors de l\'envoi. Veuillez réessayer.');
+                            })
+                            .finally(() => {
+                                submitButton.disabled = false;
+                                submitButton.textContent = originalButtonText;
+                            });
+                            */
+                    /*
+                                // Simulation temporaire (à supprimer en production)
+                                setTimeout(() => {
+                                    showModal();
+                                    document.getElementById("contactForm").reset();
+                                    submitButton.disabled = false;
+                                    submitButton.textContent = originalButtonText;
+                                }, 1000);
+                            */
                 });
         </script>
 
