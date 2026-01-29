@@ -64,18 +64,128 @@
         <section id="contact" class="contact">
             <h2>Contact</h2>
             <p>📍 55 boulevard Gouvion-Saint-Cyr, 75017 Paris</p>
-            <p>📧 contact@aCTIV.fr (à adapter)</p>
+            <p>📧 contact@activ.fr</p>
 
-            <form>
-                <input type="text" placeholder="Nom" required />
-                <input type="email" placeholder="Email" required />
-                <textarea placeholder="Votre message"></textarea>
+            <form id="contactForm">
+                <input type="text" name="name" placeholder="Nom" required />
+                <input type="email" name="email" placeholder="Email" required />
+                <textarea
+                    name="message"
+                    placeholder="Votre message"
+                    required
+                ></textarea>
                 <button type="submit">Envoyer</button>
+                <div class="form-message" id="formMessage"></div>
             </form>
         </section>
 
         <footer>
             <p>@CTIV - Tous droits réservés</p>
         </footer>
+
+        <script>
+            // Gestion du formulaire de contact
+            document
+                .getElementById("contactForm")
+                .addEventListener("submit", function (e) {
+                    e.preventDefault();
+
+                    const formMessage = document.getElementById("formMessage");
+                    const submitButton = this.querySelector(
+                        'button[type="submit"]'
+                    );
+                    const originalButtonText = submitButton.textContent;
+
+                    // Récupération des données du formulaire
+                    const formData = {
+                        name: this.name.value,
+                        email: this.email.value,
+                        message: this.message.value
+                    };
+
+                    // Désactivation du bouton pendant l'envoi
+                    submitButton.disabled = true;
+                    submitButton.textContent = "Envoi en cours...";
+
+                    // Simulation d'envoi (à remplacer par EmailJS ou autre service)
+                    // Pour utiliser EmailJS, créez un compte sur emailjs.com et remplacez ci-dessous
+
+                    // Option 1: EmailJS (gratuit jusqu'à 200 emails/mois)
+                    // Décommentez et configurez avec vos identifiants EmailJS:
+                    /*
+                emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", {
+                    from_name: formData.name,
+                    from_email: formData.email,
+                    message: formData.message,
+                    to_email: "contact@activ.fr"
+                })
+                .then(function() {
+                    formMessage.textContent = '✓ Message envoyé avec succès !';
+                    formMessage.className = 'form-message success';
+                    formMessage.style.display = 'block';
+                    document.getElementById('contactForm').reset();
+                }, function(error) {
+                    formMessage.textContent = '✗ Erreur lors de l\'envoi. Veuillez réessayer.';
+                    formMessage.className = 'form-message error';
+                    formMessage.style.display = 'block';
+                })
+                .finally(function() {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                });
+                */
+
+                    // Option 2: Formspree (gratuit jusqu'à 50 soumissions/mois)
+                    // Remplacez YOUR_FORM_ID par votre ID Formspree
+                    /*
+                fetch('https://formspree.io/f/YOUR_FORM_ID', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(formData)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        formMessage.textContent = '✓ Message envoyé avec succès !';
+                        formMessage.className = 'form-message success';
+                        formMessage.style.display = 'block';
+                        document.getElementById('contactForm').reset();
+                    } else {
+                        throw new Error('Erreur réseau');
+                    }
+                })
+                .catch(error => {
+                    formMessage.textContent = '✗ Erreur lors de l\'envoi. Veuillez réessayer.';
+                    formMessage.className = 'form-message error';
+                    formMessage.style.display = 'block';
+                })
+                .finally(() => {
+                    submitButton.disabled = false;
+                    submitButton.textContent = originalButtonText;
+                });
+                */
+
+                    // Simulation temporaire (à supprimer en production)
+                    setTimeout(() => {
+                        formMessage.textContent =
+                            "✓ Message envoyé avec succès ! (Mode démo - configurez EmailJS ou Formspree)";
+                        formMessage.className = "form-message success";
+                        formMessage.style.display = "block";
+                        document.getElementById("contactForm").reset();
+                        submitButton.disabled = false;
+                        submitButton.textContent = originalButtonText;
+
+                        // Masquer le message après 5 secondes
+                        setTimeout(() => {
+                            formMessage.style.display = "none";
+                        }, 5000);
+                    }, 1000);
+                });
+        </script>
+
+        <!-- Pour utiliser EmailJS, ajoutez cette ligne et configurez le script ci-dessus -->
+        <!-- <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script> -->
+        <!-- <script>emailjs.init("YOUR_PUBLIC_KEY");</script> -->
     </body>
 </html>
