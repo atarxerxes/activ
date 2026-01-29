@@ -75,7 +75,6 @@
                     required
                 ></textarea>
                 <button type="submit">Envoyer</button>
-                <div class="form-message" id="formMessage"></div>
             </form>
         </section>
 
@@ -83,14 +82,49 @@
             <p>@CTIV - Tous droits réservés</p>
         </footer>
 
+        <!-- Popup modale de confirmation -->
+        <div class="modal-overlay" id="modalOverlay">
+            <div class="modal">
+                <div class="modal-icon">✓</div>
+                <h3>Message envoyé !</h3>
+                <p>
+                    Merci pour votre message. Nous vous répondrons dans les plus
+                    brefs délais.
+                </p>
+                <button class="modal-close" onclick="closeModal()">
+                    Fermer
+                </button>
+            </div>
+        </div>
+
         <script>
+            // Fonction pour afficher la popup
+            function showModal() {
+                document.getElementById("modalOverlay").classList.add("show");
+            }
+
+            // Fonction pour fermer la popup
+            function closeModal() {
+                document
+                    .getElementById("modalOverlay")
+                    .classList.remove("show");
+            }
+
+            // Fermer la popup en cliquant sur l'overlay
+            document
+                .getElementById("modalOverlay")
+                .addEventListener("click", function (e) {
+                    if (e.target === this) {
+                        closeModal();
+                    }
+                });
+
             // Gestion du formulaire de contact
             document
                 .getElementById("contactForm")
                 .addEventListener("submit", function (e) {
                     e.preventDefault();
 
-                    const formMessage = document.getElementById("formMessage");
                     const submitButton = this.querySelector(
                         'button[type="submit"]'
                     );
@@ -120,14 +154,10 @@
                     to_email: "contact@activ.fr"
                 })
                 .then(function() {
-                    formMessage.textContent = '✓ Message envoyé avec succès !';
-                    formMessage.className = 'form-message success';
-                    formMessage.style.display = 'block';
+                    showModal();
                     document.getElementById('contactForm').reset();
                 }, function(error) {
-                    formMessage.textContent = '✗ Erreur lors de l\'envoi. Veuillez réessayer.';
-                    formMessage.className = 'form-message error';
-                    formMessage.style.display = 'block';
+                    alert('Erreur lors de l\'envoi. Veuillez réessayer.');
                 })
                 .finally(function() {
                     submitButton.disabled = false;
@@ -147,18 +177,14 @@
                 })
                 .then(response => {
                     if (response.ok) {
-                        formMessage.textContent = '✓ Message envoyé avec succès !';
-                        formMessage.className = 'form-message success';
-                        formMessage.style.display = 'block';
+                        showModal();
                         document.getElementById('contactForm').reset();
                     } else {
                         throw new Error('Erreur réseau');
                     }
                 })
                 .catch(error => {
-                    formMessage.textContent = '✗ Erreur lors de l\'envoi. Veuillez réessayer.';
-                    formMessage.className = 'form-message error';
-                    formMessage.style.display = 'block';
+                    alert('Erreur lors de l\'envoi. Veuillez réessayer.');
                 })
                 .finally(() => {
                     submitButton.disabled = false;
@@ -168,18 +194,10 @@
 
                     // Simulation temporaire (à supprimer en production)
                     setTimeout(() => {
-                        formMessage.textContent =
-                            "✓ Message envoyé avec succès ! (Mode démo - configurez EmailJS ou Formspree)";
-                        formMessage.className = "form-message success";
-                        formMessage.style.display = "block";
+                        showModal();
                         document.getElementById("contactForm").reset();
                         submitButton.disabled = false;
                         submitButton.textContent = originalButtonText;
-
-                        // Masquer le message après 5 secondes
-                        setTimeout(() => {
-                            formMessage.style.display = "none";
-                        }, 5000);
                     }, 1000);
                 });
         </script>
