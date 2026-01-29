@@ -64,7 +64,7 @@
         <section id="contact" class="contact">
             <h2>Contact</h2>
             <p>📍 55 boulevard Gouvion-Saint-Cyr, 75017 Paris</p>
-            <p>📧 contact@activ.fr</p>
+            <!--p>📧 contact@activ.fr</p-->
 
             <form id="contactForm">
                 <input type="text" name="name" placeholder="Nom" required />
@@ -108,6 +108,8 @@
                 document
                     .getElementById("modalOverlay")
                     .classList.remove("show");
+                // Scroll vers le haut de la page
+                window.scrollTo({ top: 0, behavior: "smooth" });
             }
 
             // Fermer la popup en cliquant sur l'overlay
